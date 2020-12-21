@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PEHeader\PEUtility.Headers.csproj" />
+    <ProjectReference Include="..\PEUtility.Headers\PEUtility.Headers.csproj" />
   </ItemGroup>
 
 </Project>
