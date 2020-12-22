@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace PEUtility.Headers
 {
-    public struct NtHeader32
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PeHeader32
     {
         public UInt32 Signature;
         public FileHeader FileHeader;
         public OptionalHeader32 OptionalHeader;
     }
 
-    public struct NtHeader64
+    [StructLayout(LayoutKind.Sequential)]
+    public struct PeHeader64
     {
         public UInt32 Signature;
         public FileHeader FileHeader;

@@ -12,6 +12,7 @@ namespace PEUtility.Headers
         public UInt16 e_minalloc;
         public UInt16 e_maxalloc;
         public UInt16 e_ss;
+        public UInt16 e_sp;
         public UInt16 e_csum;
         public UInt16 e_ip;
         public UInt16 e_cs;
@@ -33,6 +34,6 @@ namespace PEUtility.Headers
         public UInt16 e_res2_7;
         public UInt16 e_res2_8;
         public UInt16 e_res2_9;
-        public UInt16 e_ifanew;
+        public UInt32 e_ifanew;
     }
 }

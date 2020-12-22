@@ -8,7 +8,7 @@ namespace PEUtility.Headers
     {
         [FieldOffset(0)]
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-        public char[] Name;
+        public Char[] Name;
         [FieldOffset(8)]
         public UInt32 VirtualSize;
         [FieldOffset(12)]
