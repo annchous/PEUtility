@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using PEUtility.Exceptions;
 using PEUtility.Headers;
 
@@ -10,10 +8,10 @@ namespace PEUtility.Readers
     public class PeHeaderReader
     {
         private readonly String _filePath;
-        public Boolean Is32BitPeHeader { get; set; }
         public DosHeader DosHeader { get; set; }
         public PeHeader32 PeHeader32 { get; set; }
         public PeHeader64 PeHeader64 { get; set; }
+        public Boolean Is32BitPeHeader { get; set; }
         public SectionHeader[] SectionHeaders { get; set; }
 
         public PeHeaderReader(String filePath)
@@ -54,11 +52,16 @@ namespace PEUtility.Readers
             for (var i = 0; i < SectionHeaders.Length; i++)
             {
                 SectionHeaders[i] = PeBlockToStructConverter.ConvertTo<SectionHeader>(br);
-                Console.WriteLine(SectionHeaders[i].Name);
             }
 
             br.Dispose();
             br.Close();
+        }
+
+        public DateTime GetTimeDateStamp(UInt32 timeDateStamp)
+        {
+            var result = new DateTime(1970, 1, 1, 0, 0, 0);
+            return result.AddSeconds(timeDateStamp);
         }
     }
 }

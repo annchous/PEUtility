@@ -12,6 +12,7 @@ namespace PEUtility.Runnable
         {
             PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
             peHeaderReader.Read();
+            Console.WriteLine(peHeaderReader.GetTimeDateStamp(peHeaderReader.PeHeader64.FileHeader.TimeDateStamp));
         }
     }
 }
