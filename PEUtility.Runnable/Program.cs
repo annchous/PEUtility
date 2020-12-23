@@ -7,8 +7,8 @@ namespace PEUtility.Runnable
     {
         static void Main(string[] args)
         {
-            PeRelocationsReader peRelocationsReader = new PeRelocationsReader("C:\\Users\\annchous\\Downloads\\test.ekze");
-            peRelocationsReader.Read();
+            PeExportTableReader peExportTableReader = new PeExportTableReader("C:\\Users\\annchous\\Downloads\\test.ekze");
+            peExportTableReader.Read();
 
             //PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
             //peHeaderReader.Read();
