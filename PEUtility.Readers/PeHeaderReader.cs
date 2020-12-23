@@ -2,6 +2,7 @@
 using System.IO;
 using PEUtility.Exceptions;
 using PEUtility.Headers;
+using PEUtility.Tools;
 
 namespace PEUtility.Readers
 {

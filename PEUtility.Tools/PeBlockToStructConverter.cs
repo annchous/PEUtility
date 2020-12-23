@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
-using PEUtility.Headers;
 
-namespace PEUtility.Readers
+namespace PEUtility.Tools
 {
     public static class PeBlockToStructConverter
     {
