@@ -10,6 +10,11 @@ namespace PEUtility.Runnable
             PeExportTableReader peExportTableReader = new PeExportTableReader("C:\\Users\\annchous\\Downloads\\test.ekze");
             peExportTableReader.Read();
 
+            foreach (var exportFunction in peExportTableReader.ExportFunctions)
+            {
+                Console.WriteLine(exportFunction.Name ?? exportFunction.RedirectionName);
+            }
+
             //PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
             //peHeaderReader.Read();
             //Console.WriteLine(peHeaderReader.SectionHeaders[^2].SizeOfRawData);

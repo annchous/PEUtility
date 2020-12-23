@@ -13,8 +13,8 @@ namespace PEUtility.Readers
     {
         private readonly String _filePath;
         public ExportTable ExportTable { get; set; }
-        public ImageDataDirectory ExportTableDirectory { get; set; }
         public List<ExportFunction> ExportFunctions { get; set; }
+        public ImageDataDirectory ExportTableDirectory { get; set; }
 
         public PeExportTableReader(String filePath)
         {
@@ -66,7 +66,11 @@ namespace PEUtility.Readers
             {
                 var ordinal = ExportTable.Base + i;
                 var exportFunctionAddress = br.ReadUInt32();
-                ExportFunctions.Add(new ExportFunction(exportFunctionAddress, (UInt16)ordinal));
+                ExportFunctions.Add(new ExportFunction()
+                {
+                    Address = exportFunctionAddress,
+                    Ordinal = (UInt16)ordinal
+                });
             }
 
             fs.Seek(namesTableAddress, SeekOrigin.Begin);
@@ -81,10 +85,31 @@ namespace PEUtility.Readers
                         : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
                 var currentPosition = fs.Position;
+                fs.Seek(ordinalsTableAddress + sizeof(UInt16) * i, SeekOrigin.Begin);
+
+                var ordinalIndex = br.ReadUInt16();
+                fs.Seek(currentPosition, SeekOrigin.Begin);
+
                 String name = ByteArrayToAsciiStringConverter.ConvertToString(fs, nameAddress);
                 fs.Seek(currentPosition, SeekOrigin.Begin);
 
-                
+                if (RedirectionRva(ExportFunctions[ordinalIndex].Address))
+                {
+                    var redirectionNameAddress = RvaToRawFormatConverter.RvaToOffset(ExportFunctions[ordinalIndex].Address,
+                        peHeaderReader.SectionHeaders,
+                        peHeaderReader.Is32BitPeHeader
+                            ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
+                            : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
+                    String redirectionName = ByteArrayToAsciiStringConverter.ConvertToString(fs, redirectionNameAddress);
+                    fs.Seek(currentPosition, SeekOrigin.Begin);
+
+                    ExportFunctions[ordinalIndex].Name = null;
+                    ExportFunctions[ordinalIndex].RedirectionName = redirectionName;
+                }
+                else
+                {
+                    ExportFunctions[ordinalIndex].Name = name;
+                }
             }
 
             return this;
