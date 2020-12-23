@@ -4,7 +4,6 @@ using PEUtility.Tools;
 
 namespace PEUtility.Sections
 {
-    [StructLayout(LayoutKind.Sequential)]
     public struct RelocationSection
     {
         public RelocationType Type;
