@@ -8,7 +8,7 @@ namespace PEUtility.Directories
     {
         public UInt32 PageRva { get; set; }
         public UInt32 BlockSize { get; set; }
-        public List<RelocationSection> RelocationSections { get; set; }
+        public List<RelocationSection> RelocationSections { get; }
 
         public RelocationBlock()
         {
