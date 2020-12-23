@@ -20,6 +20,14 @@ namespace PEUtility.Readers
             _filePath = filePath;
         }
 
+        /// <summary>
+        /// Reads all Portable Executable file headers:
+        /// DosHeader and PeHeader, which includes Signature,
+        /// FileHeader and OptionalHeader depending on bit type of file.
+        /// Checks signature to be equal "PE". In case of inequality
+        /// throws an exception.
+        /// <returns>Void, just fills properties in class.</returns>
+        /// </summary>
         public void Read()
         {
             using var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read);
@@ -59,6 +67,12 @@ namespace PEUtility.Readers
             br.Close();
         }
 
+        /// <summary>
+        /// Converts TimeDateStamp from FileHeader structure
+        /// given in seconds to UTC DateTime format.
+        /// </summary>
+        /// <param name="timeDateStamp">Value in seconds from FileHeader structure</param>
+        /// <returns></returns>
         public DateTime GetTimeDateStamp(UInt32 timeDateStamp)
         {
             var result = new DateTime(1970, 1, 1, 0, 0, 0);

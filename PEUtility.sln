@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Exceptions", "PEU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Tools", "PEUtility.Tools\PEUtility.Tools.csproj", "{DE270E6C-2F58-42C9-92E5-22875AEB6D0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Sections", "PEUtility.Sections\PEUtility.Sections.csproj", "{8B5D935B-35E2-4B2F-808C-5357B510F5D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DE270E6C-2F58-42C9-92E5-22875AEB6D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE270E6C-2F58-42C9-92E5-22875AEB6D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE270E6C-2F58-42C9-92E5-22875AEB6D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
