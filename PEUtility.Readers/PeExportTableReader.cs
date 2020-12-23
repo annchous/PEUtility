@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using PEUtility.Directories;
 using PEUtility.Headers;
+using PEUtility.Sections;
 using PEUtility.Tools;
 
 namespace PEUtility.Readers
@@ -13,17 +14,12 @@ namespace PEUtility.Readers
         private readonly String _filePath;
         public ExportTable ExportTable { get; set; }
         public ImageDataDirectory ExportTableDirectory { get; set; }
-
-        public List<String> Names { get; set; }
-        public List<UInt32> Ordinals { get; set; }
-        public List<UInt32> Functions { get; set; }
+        public List<ExportFunction> ExportFunctions { get; set; }
 
         public PeExportTableReader(String filePath)
         {
             _filePath = filePath;
-            Names = new List<String>();
-            Ordinals = new List<UInt32>();
-            Functions = new List<UInt32>();
+            ExportFunctions = new List<ExportFunction>();
         }
 
         public IReadable Read()
@@ -68,17 +64,34 @@ namespace PEUtility.Readers
 
             for (UInt32 i = 0; i < ExportTable.NumberOfFunctions; i++)
             {
-                Functions.Add(br.ReadUInt32());
+                var ordinal = ExportTable.Base + i;
+                var exportFunctionAddress = br.ReadUInt32();
+                ExportFunctions.Add(new ExportFunction(exportFunctionAddress, (UInt16)ordinal));
             }
 
-            fs.Seek(ordinalsTableAddress, SeekOrigin.Begin);
+            fs.Seek(namesTableAddress, SeekOrigin.Begin);
 
             for (UInt32 i = 0; i < ExportTable.NumberOfNames; i++)
             {
-                Ordinals.Add(br.ReadUInt32());
+                var nameRva = br.ReadUInt32();
+                var nameAddress = RvaToRawFormatConverter.RvaToOffset(nameRva, 
+                    peHeaderReader.SectionHeaders,
+                    peHeaderReader.Is32BitPeHeader
+                        ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
+                        : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
+
+                var currentPosition = fs.Position;
+                String name = ByteArrayToAsciiStringConverter.ConvertToString(fs, nameAddress);
+                fs.Seek(currentPosition, SeekOrigin.Begin);
+
+                
             }
 
             return this;
         }
+
+        private Boolean RedirectionRva(UInt32 address) => address >= ExportTableDirectory.VirtualAddress &&
+                                                          address < ExportTableDirectory.VirtualAddress +
+                                                          ExportTableDirectory.Size;
     }
 }
