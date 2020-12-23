@@ -68,17 +68,5 @@ namespace PEUtility.Readers
 
             return this;
         }
-
-        /// <summary>
-        /// Converts TimeDateStamp from FileHeader structure
-        /// given in seconds to UTC DateTime format.
-        /// </summary>
-        /// <param name="timeDateStamp">Value in seconds from FileHeader structure</param>
-        /// <returns></returns>
-        public DateTime GetTimeDateStamp(UInt32 timeDateStamp)
-        {
-            var result = new DateTime(1970, 1, 1, 0, 0, 0);
-            return result.AddSeconds(timeDateStamp);
-        }
     }
 }
