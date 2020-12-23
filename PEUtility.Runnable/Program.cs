@@ -1,7 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Reflection.PortableExecutable;
-using System.Runtime.InteropServices;
 using PEUtility.Readers;
 
 namespace PEUtility.Runnable
@@ -10,9 +7,12 @@ namespace PEUtility.Runnable
     {
         static void Main(string[] args)
         {
-            PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
-            peHeaderReader.Read();
-            Console.WriteLine(peHeaderReader.GetTimeDateStamp(peHeaderReader.PeHeader64.FileHeader.TimeDateStamp));
+            PeRelocationsReader peRelocationsReader = new PeRelocationsReader("C:\\Users\\annchous\\Downloads\\test.ekze");
+            peRelocationsReader.Read();
+
+            //PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
+            //peHeaderReader.Read();
+            //Console.WriteLine(peHeaderReader.SectionHeaders[^2].SizeOfRawData);
         }
     }
 }

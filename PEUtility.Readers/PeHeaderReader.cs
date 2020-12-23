@@ -6,7 +6,7 @@ using PEUtility.Tools;
 
 namespace PEUtility.Readers
 {
-    public class PeHeaderReader
+    public class PeHeaderReader : IReadable
     {
         private readonly String _filePath;
         public DosHeader DosHeader { get; set; }
@@ -28,7 +28,7 @@ namespace PEUtility.Readers
         /// throws an exception.
         /// <returns>Void, just fills properties in class.</returns>
         /// </summary>
-        public void Read()
+        public IReadable Read()
         {
             using var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read);
             var br = new BinaryReader(fs);
@@ -65,6 +65,8 @@ namespace PEUtility.Readers
 
             br.Dispose();
             br.Close();
+
+            return this;
         }
 
         /// <summary>

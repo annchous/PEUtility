@@ -4,9 +4,10 @@ using PEUtility.Tools;
 
 namespace PEUtility.Sections
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct RelocationSection
     {
         public RelocationType Type;
-        public UInt32 Offset;
+        public UInt16 Offset;
     }
 }

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PEUtility.Directories\PEUtility.Directories.csproj" />
     <ProjectReference Include="..\PEUtility.Exceptions\PEUtility.Exceptions.csproj" />
     <ProjectReference Include="..\PEUtility.Headers\PEUtility.Headers.csproj" />
     <ProjectReference Include="..\PEUtility.Tools\PEUtility.Tools.csproj" />

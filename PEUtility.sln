@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Tools", "PEUtilit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Sections", "PEUtility.Sections\PEUtility.Sections.csproj", "{8B5D935B-35E2-4B2F-808C-5357B510F5D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Directories", "PEUtility.Directories\PEUtility.Directories.csproj", "{08C62792-848A-4C85-921C-13ED524E9B38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B5D935B-35E2-4B2F-808C-5357B510F5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C62792-848A-4C85-921C-13ED524E9B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C62792-848A-4C85-921C-13ED524E9B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C62792-848A-4C85-921C-13ED524E9B38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C62792-848A-4C85-921C-13ED524E9B38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
