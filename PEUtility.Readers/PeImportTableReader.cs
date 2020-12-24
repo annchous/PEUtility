@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using PEUtility.Directories;
 using PEUtility.Headers;
 using PEUtility.Tools;
@@ -81,6 +83,8 @@ namespace PEUtility.Readers
                         ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
                         : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
+                var counter = 0;
+
                 if (peHeaderReader.Is32BitPeHeader)
                 {
                     fs.Seek(ilt, SeekOrigin.Begin);
@@ -106,7 +110,7 @@ namespace PEUtility.Readers
                                 Name = ByteArrayToAsciiStringConverter.ConvertToString(fs, 0)
                             });
 
-                            fs.Seek(currentPosition2, SeekOrigin.Begin);
+                            fs.Seek(currentPosition2 + Marshal.SizeOf(thunkData32) * counter, SeekOrigin.Begin);
                         }
                         else
                         {
@@ -119,6 +123,7 @@ namespace PEUtility.Readers
                         }
 
                         thunkData32 = PeBlockToStructConverter.ConvertTo<ThunkData32>(br);
+                        counter++;
                     }
                 }
                 else
@@ -146,7 +151,7 @@ namespace PEUtility.Readers
                                 Name = ByteArrayToAsciiStringConverter.ConvertToString(fs, 0)
                             });
 
-                            fs.Seek(currentPosition2, SeekOrigin.Begin);
+                            fs.Seek(currentPosition2 + Marshal.SizeOf(thunkData64) * counter, SeekOrigin.Begin);
                         }
                         else
                         {
@@ -159,6 +164,7 @@ namespace PEUtility.Readers
                         }
 
                         thunkData64 = PeBlockToStructConverter.ConvertTo<ThunkData64>(br);
+                        counter++;
                     }
                 }
 

@@ -17,6 +17,7 @@ namespace PEUtility.Runnable
                 foreach (var importFunctionInfo in importFunction.Functions)
                 {
                     Console.WriteLine(importFunctionInfo.Hint);
+                    //Console.WriteLine(importFunctionInfo.Name);
                 }
             }
 
