@@ -7,13 +7,8 @@ namespace PEUtility.Runnable
     {
         static void Main(string[] args)
         {
-            PeExportTableReader peExportTableReader = new PeExportTableReader("C:\\Users\\annchous\\Downloads\\test.ekze");
-            peExportTableReader.Read();
-
-            foreach (var exportFunction in peExportTableReader.ExportFunctions)
-            {
-                Console.WriteLine(exportFunction.Name ?? exportFunction.RedirectionName);
-            }
+            PeImportTableReader peImportTableReader = new PeImportTableReader("C:\\Users\\annchous\\Downloads\\test.ekze");
+            peImportTableReader.Read();
 
             //PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
             //peHeaderReader.Read();

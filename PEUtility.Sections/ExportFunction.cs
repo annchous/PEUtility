@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System;
 
-namespace PEUtility.Sections
+namespace PEUtility.Units
 {
     public class ExportFunction
     {

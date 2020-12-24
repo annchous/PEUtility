@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using PEUtility.Tools;
 
-namespace PEUtility.Sections
+namespace PEUtility.Units
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct RelocationSection

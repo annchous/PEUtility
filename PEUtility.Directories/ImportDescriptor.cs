@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 namespace PEUtility.Directories
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct ImportTable
+    public struct ImportDescriptor
     {
         [FieldOffset(0)] 
-        public UInt32 Characteristics;
+        public UInt32 OriginalFirstThunk;
         [FieldOffset(4)]
         public UInt32 TimeDateStamp;
         [FieldOffset(8)] 
@@ -15,6 +15,6 @@ namespace PEUtility.Directories
         [FieldOffset(12)]
         public UInt32 Name;
         [FieldOffset(16)]
-        public UInt32 ThunkTable;
+        public UInt32 FirstThunk;
     }
 }

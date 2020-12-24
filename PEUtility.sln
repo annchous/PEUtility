@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Exceptions", "PEU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Tools", "PEUtility.Tools\PEUtility.Tools.csproj", "{DE270E6C-2F58-42C9-92E5-22875AEB6D0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Sections", "PEUtility.Sections\PEUtility.Sections.csproj", "{8B5D935B-35E2-4B2F-808C-5357B510F5D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Units", "PEUtility.Sections\PEUtility.Units.csproj", "{8B5D935B-35E2-4B2F-808C-5357B510F5D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEUtility.Directories", "PEUtility.Directories\PEUtility.Directories.csproj", "{08C62792-848A-4C85-921C-13ED524E9B38}"
 EndProject

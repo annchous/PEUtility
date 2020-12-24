@@ -4,8 +4,8 @@ using System.IO;
 using System.Reflection;
 using PEUtility.Directories;
 using PEUtility.Headers;
-using PEUtility.Sections;
 using PEUtility.Tools;
+using PEUtility.Units;
 
 namespace PEUtility.Readers
 {
