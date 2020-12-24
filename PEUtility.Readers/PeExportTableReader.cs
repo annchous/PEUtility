@@ -9,16 +9,14 @@ using PEUtility.Tools;
 
 namespace PEUtility.Readers
 {
-    public class PeExportTableReader : IReadable
+    public class PeExportTableReader : PeReader, IReadable
     {
-        private readonly String _filePath;
         public ExportTable ExportTable { get; set; }
         public List<ExportFunction> ExportFunctions { get; set; }
         public ImageDataDirectory ExportTableDirectory { get; set; }
 
-        public PeExportTableReader(String filePath)
+        public PeExportTableReader(String filePath) : base(filePath)
         {
-            _filePath = filePath;
             ExportFunctions = new List<ExportFunction>();
         }
 

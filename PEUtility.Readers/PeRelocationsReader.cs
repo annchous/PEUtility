@@ -10,15 +10,13 @@ using System.Runtime.InteropServices;
 
 namespace PEUtility.Readers
 {
-    public class PeRelocationsReader : IReadable
+    public class PeRelocationsReader : PeReader, IReadable
     {
-        private readonly String _filePath;
         public ImageDataDirectory BaseRelocationTable { get; set; }
         public List<RelocationBlock> RelocationBlocks { get; set; }
 
-        public PeRelocationsReader(String filePath)
+        public PeRelocationsReader(String filePath) : base(filePath)
         {
-            _filePath = filePath;
             RelocationBlocks = new List<RelocationBlock>();
         }
 

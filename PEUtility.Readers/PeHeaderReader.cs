@@ -6,18 +6,16 @@ using PEUtility.Tools;
 
 namespace PEUtility.Readers
 {
-    public class PeHeaderReader : IReadable
+    public class PeHeaderReader : PeReader, IReadable
     {
-        private readonly String _filePath;
         public DosHeader DosHeader { get; set; }
         public PeHeader32 PeHeader32 { get; set; }
         public PeHeader64 PeHeader64 { get; set; }
         public Boolean Is32BitPeHeader { get; set; }
         public SectionHeader[] SectionHeaders { get; set; }
 
-        public PeHeaderReader(String filePath)
+        public PeHeaderReader(String filePath) : base(filePath)
         {
-            _filePath = filePath;
         }
 
         /// <summary>
