@@ -28,7 +28,7 @@ namespace PEUtility.Readers
                 ? peHeaderReader.PeHeader32.OptionalHeader.ExportTable
                 : peHeaderReader.PeHeader64.OptionalHeader.ExportTable;
 
-            var address = RvaToRawFormatConverter.RvaToOffset(ExportTableDirectory.VirtualAddress,
+            var address = RvaToRawFormatConverter.RvaToOffset32(ExportTableDirectory.VirtualAddress,
                 peHeaderReader.SectionHeaders,
                 peHeaderReader.Is32BitPeHeader
                     ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
@@ -40,19 +40,19 @@ namespace PEUtility.Readers
 
             ExportTable = PeBlockToStructConverter.ConvertTo<ExportTable>(br);
 
-            var ordinalsTableAddress = RvaToRawFormatConverter.RvaToOffset(ExportTable.AddressOfNameOrdinals, 
+            var ordinalsTableAddress = RvaToRawFormatConverter.RvaToOffset32(ExportTable.AddressOfNameOrdinals, 
                 peHeaderReader.SectionHeaders,
                 peHeaderReader.Is32BitPeHeader
                     ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
                     : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
-            var functionsTableAddress = RvaToRawFormatConverter.RvaToOffset(ExportTable.AddressOfFunctions,
+            var functionsTableAddress = RvaToRawFormatConverter.RvaToOffset32(ExportTable.AddressOfFunctions,
                 peHeaderReader.SectionHeaders,
                 peHeaderReader.Is32BitPeHeader
                     ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
                     : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
-            var namesTableAddress = RvaToRawFormatConverter.RvaToOffset(ExportTable.AddressOfNames,
+            var namesTableAddress = RvaToRawFormatConverter.RvaToOffset32(ExportTable.AddressOfNames,
                 peHeaderReader.SectionHeaders,
                 peHeaderReader.Is32BitPeHeader
                     ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
@@ -76,7 +76,7 @@ namespace PEUtility.Readers
             for (UInt32 i = 0; i < ExportTable.NumberOfNames; i++)
             {
                 var nameRva = br.ReadUInt32();
-                var nameAddress = RvaToRawFormatConverter.RvaToOffset(nameRva, 
+                var nameAddress = RvaToRawFormatConverter.RvaToOffset32(nameRva, 
                     peHeaderReader.SectionHeaders,
                     peHeaderReader.Is32BitPeHeader
                         ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
@@ -93,7 +93,7 @@ namespace PEUtility.Readers
 
                 if (RedirectionRva(ExportFunctions[ordinalIndex].Address))
                 {
-                    var redirectionNameAddress = RvaToRawFormatConverter.RvaToOffset(ExportFunctions[ordinalIndex].Address,
+                    var redirectionNameAddress = RvaToRawFormatConverter.RvaToOffset32(ExportFunctions[ordinalIndex].Address,
                         peHeaderReader.SectionHeaders,
                         peHeaderReader.Is32BitPeHeader
                             ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment

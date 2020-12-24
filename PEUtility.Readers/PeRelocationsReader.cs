@@ -28,7 +28,7 @@ namespace PEUtility.Readers
                 ? peHeaderReader.PeHeader32.OptionalHeader.BaseRelocationTable
                 : peHeaderReader.PeHeader64.OptionalHeader.BaseRelocationTable;
 
-            var address = RvaToRawFormatConverter.RvaToOffset(BaseRelocationTable.VirtualAddress,
+            var address = RvaToRawFormatConverter.RvaToOffset32(BaseRelocationTable.VirtualAddress,
                 peHeaderReader.SectionHeaders,
                 peHeaderReader.Is32BitPeHeader
                     ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment

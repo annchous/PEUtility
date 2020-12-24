@@ -6,13 +6,13 @@ namespace PEUtility.Units
     [StructLayout(LayoutKind.Explicit)]
     public struct ThunkData32
     {
-        [FieldOffset(0)] 
+        [FieldOffset(0)]
         public UInt32 ForwarderString;
-        [FieldOffset(4)] 
+        [FieldOffset(4)]
         public UInt32 Function;
-        [FieldOffset(8)] 
+        [FieldOffset(8)]
         public UInt32 Ordinal;
-        [FieldOffset(12)] 
+        [FieldOffset(12)]
         public UInt32 AddressOfData;
     }
 
