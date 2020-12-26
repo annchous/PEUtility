@@ -7,7 +7,7 @@ namespace PEUtility.Runnable
     {
         static void Main(string[] args)
         {
-            PeImportTableReader peImportTableReader = new PeImportTableReader("C:\\Users\\annchous\\Downloads\\test.ekze");
+            PeImportTableReader peImportTableReader = new PeImportTableReader("C:\\Windows\\System32\\kernel32.dll");
             peImportTableReader.Read();
 
             foreach (var importFunction in peImportTableReader.ImportFunctions)
@@ -16,14 +16,18 @@ namespace PEUtility.Runnable
 
                 foreach (var importFunctionInfo in importFunction.Functions)
                 {
-                    Console.WriteLine(importFunctionInfo.Hint);
-                    //Console.WriteLine(importFunctionInfo.Name);
+                    Console.Write("HINT: " + importFunctionInfo.Hint);
+                    if (importFunctionInfo.Name != null)
+                    {
+                        Console.Write(" NAME " + importFunctionInfo.Name);
+                    }
+                    else
+                    {
+                        Console.Write(" ORDINAL: " + (importFunctionInfo.Ordinal32 ?? importFunctionInfo.Ordinal64));
+                    }
+                    Console.Write("\n");
                 }
             }
-
-            //PeHeaderReader peHeaderReader = new PeHeaderReader("C:\\Users\\annchous\\Downloads\\test.ekze");
-            //peHeaderReader.Read();
-            //Console.WriteLine(peHeaderReader.SectionHeaders[^2].SizeOfRawData);
         }
     }
 }

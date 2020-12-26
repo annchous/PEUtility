@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using PEUtility.Directories;
 using PEUtility.Headers;
 using PEUtility.Tools;
@@ -71,87 +72,92 @@ namespace PEUtility.Readers
                 fs.Seek(currentPosition, SeekOrigin.Begin);
                 importFunction.TimeDateStamp = TimeDateStampToDateTimeConverter.ConvertTimeDateStamp(ImportTable[i].TimeDateStamp);
 
-                var iat = RvaToRawFormatConverter.RvaToOffset32(ImportTable[i].FirstThunk,
-                    peHeaderReader.SectionHeaders,
-                    peHeaderReader.Is32BitPeHeader
-                        ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
-                        : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
-
                 var ilt = RvaToRawFormatConverter.RvaToOffset32(ImportTable[i].OriginalFirstThunk,
                     peHeaderReader.SectionHeaders,
                     peHeaderReader.Is32BitPeHeader
                         ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
                         : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
-                var counter = 0;
+                fs.Seek(ilt, SeekOrigin.Begin);
 
                 if (peHeaderReader.Is32BitPeHeader)
                 {
-                    fs.Seek(ilt, SeekOrigin.Begin);
-                    var thunkData32 = PeBlockToStructConverter.ConvertTo<ThunkData32>(br);
-                    fs.Seek(currentPosition, SeekOrigin.Begin);
-
-                    while (thunkData32.Function != 0)
+                    while (true)
                     {
+                        var thunkData32 = PeBlockToStructConverter.ConvertTo<ThunkData32>(br);
+                        if (thunkData32.Function == 0) break;
+
                         var currentPosition2 = fs.Position;
-                        if ((thunkData32.AddressOfData & (UInt32) 1 << 31) == 0)
+                        if ((thunkData32.AddressOfData & (UInt32)1 << 31) == 0)
                         {
                             var functionAddress = RvaToRawFormatConverter.RvaToOffset32(thunkData32.Function,
-                                peHeaderReader.SectionHeaders,
-                                peHeaderReader.Is32BitPeHeader
-                                    ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
-                                    : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
+                                peHeaderReader.SectionHeaders, peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment);
 
                             fs.Seek(functionAddress, SeekOrigin.Begin);
 
+                            var hint = br.ReadUInt16();
+                            var byteList = new List<Byte>();
+
+                            while (true)
+                            {
+                                var b = br.ReadByte();
+                                if (b == 0x00) break;
+                                byteList.Add(b);
+                            }
+                            var name = Encoding.ASCII.GetString(byteList.ToArray());
+
                             importFunction.Functions.Add(new ImportFunctionInfo()
                             {
-                                Hint = br.ReadUInt16(),
-                                Name = ByteArrayToAsciiStringConverter.ConvertToString(fs, 0)
+                                Hint = hint,
+                                Name = name
                             });
 
-                            fs.Seek(currentPosition2 + Marshal.SizeOf(thunkData32) * counter, SeekOrigin.Begin);
+                            fs.Seek(currentPosition2, SeekOrigin.Begin);
                         }
                         else
                         {
                             importFunction.Functions.Add(new ImportFunctionInfo()
                             {
-                                Name = null, 
+                                Name = null,
                                 Ordinal64 = null,
-                                Ordinal32 = (thunkData32.Ordinal & ((UInt32)1 << 31) - 1)
+                                Ordinal32 = (thunkData32.Ordinal & (((UInt32)1 << 31) - 1))
                             });
                         }
-
-                        thunkData32 = PeBlockToStructConverter.ConvertTo<ThunkData32>(br);
-                        counter++;
                     }
                 }
                 else
                 {
-                    fs.Seek(ilt, SeekOrigin.Begin);
-                    var thunkData64 = PeBlockToStructConverter.ConvertTo<ThunkData64>(br);
-                    fs.Seek(currentPosition, SeekOrigin.Begin);
-
-                    while (thunkData64.Function != 0)
+                    while (true)
                     {
+                        var thunkData64 = PeBlockToStructConverter.ConvertTo<ThunkData64>(br);
+                        if (thunkData64.Function == 0) break;
+
                         var currentPosition2 = fs.Position;
-                        if ((thunkData64.AddressOfData & (UInt64)1 << 63) == 0)
+                        if ((thunkData64.AddressOfData & ((UInt64)1 << 63)) == 0)
                         {
                             var functionAddress = RvaToRawFormatConverter.RvaToOffset64(thunkData64.Function,
-                                peHeaderReader.SectionHeaders,
-                                peHeaderReader.Is32BitPeHeader
-                                    ? peHeaderReader.PeHeader32.OptionalHeader.SectionAlignment
-                                    : peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
+                                peHeaderReader.SectionHeaders, peHeaderReader.PeHeader64.OptionalHeader.SectionAlignment);
 
                             fs.Seek(functionAddress, SeekOrigin.Begin);
 
+                            var hint = br.ReadUInt16();
+                            var byteList = new List<Byte>();
+
+                            while (true)
+                            {
+                                var b = br.ReadByte();
+                                if (b == 0x00) break;
+                                byteList.Add(b);
+                            }
+                            var name = Encoding.ASCII.GetString(byteList.ToArray());
+
                             importFunction.Functions.Add(new ImportFunctionInfo()
                             {
-                                Hint = br.ReadUInt16(),
-                                Name = ByteArrayToAsciiStringConverter.ConvertToString(fs, 0)
+                                Hint = hint,
+                                Name = name
                             });
 
-                            fs.Seek(currentPosition2 + Marshal.SizeOf(thunkData64) * counter, SeekOrigin.Begin);
+                            fs.Seek(currentPosition2, SeekOrigin.Begin);
                         }
                         else
                         {
@@ -159,12 +165,9 @@ namespace PEUtility.Readers
                             {
                                 Name = null,
                                 Ordinal32 = null,
-                                Ordinal64 = (thunkData64.Ordinal & ((UInt64)1 << 63) - 1)
+                                Ordinal64 = (thunkData64.Ordinal & (((UInt64)1 << 63) - 1))
                             });
                         }
-
-                        thunkData64 = PeBlockToStructConverter.ConvertTo<ThunkData64>(br);
-                        counter++;
                     }
                 }
 
